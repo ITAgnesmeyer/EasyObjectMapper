@@ -5,8 +5,10 @@ using System.Reflection;
 
 namespace EasyObjectMapper
 {
-    public class Mapper<T> where T:new()
+    public class Mapper<T> where T : new()
     {
+        public bool IgnoreCase { get; set; }
+
         public T Get<TInput>(TInput input)
         {
             Type source = typeof(TInput);
@@ -17,22 +19,28 @@ namespace EasyObjectMapper
             PropertyInfo[] destProperties = dest.GetProperties();
             foreach (PropertyInfo item in properties)
             {
-                if(destProperties.Any(x=> x.Name == item.Name))
+                if (ContainsAny(item, destProperties))
                 {
-                    var destProp = destProperties.First(x=> x.Name == item.Name);
-                    if(destProp != null)
+                    var destProp = GetFirst(item, destProperties);
+                    if (destProp != null)
                     {
-                        destProp.SetValue(newObj,item.GetValue(input));
+                        try
+                        {
+                            destProp.SetValue(newObj, item.GetValue(input));
+                        }
+                        catch (Exception e)
+                        {
+                            throw new MappingException(
+                                $"Mapping Error:{source.Name}.{item.Name}=>{dest.Name}.{destProp.Name}", e);
+                        }
                     }
-
                 }
             }
 
             return newObj;
-
         }
 
-        public void Update<TInput>(TInput input , T output)
+        public void Update<TInput>(TInput input, T output)
         {
             Type source = typeof(TInput);
             Type dest = typeof(T);
@@ -40,17 +48,23 @@ namespace EasyObjectMapper
             PropertyInfo[] destProperties = dest.GetProperties();
             foreach (PropertyInfo item in properties)
             {
-                if(destProperties.Any(x=> x.Name == item.Name))
+                if (ContainsAny(item, destProperties))
                 {
-                    var destProp = destProperties.First(x=> x.Name == item.Name);
-                    if(destProp != null)
+                    var destProp = GetFirst(item, destProperties);
+                    if (destProp != null)
                     {
-                        destProp.SetValue(output,item.GetValue(input));
+                        try
+                        {
+                            destProp.SetValue(output, item.GetValue(input));
+                        }
+                        catch (Exception e)
+                        {
+                            throw new MappingException(
+                                $"Mapping Error:{source.Name}.{item.Name}=>{dest.Name}.{destProp.Name}", e);
+                        }
                     }
-
                 }
             }
-
         }
 
         public List<T> Get<TInput>(List<TInput> input)
@@ -61,8 +75,22 @@ namespace EasyObjectMapper
                 T newObj = Get(item);
                 returnValue.Add(newObj);
             }
-           
+
             return returnValue;
+        }
+
+        private PropertyInfo GetFirst(PropertyInfo source, PropertyInfo[] dest)
+        {
+            if (this.IgnoreCase)
+                return dest.First(x => x.Name.ToLower() == source.Name.ToLower());
+            return dest.First(x => x.Name == source.Name);
+        }
+
+        private bool ContainsAny(PropertyInfo source, PropertyInfo[] dest)
+        {
+            if (this.IgnoreCase)
+                return dest.Any(x => x.Name.ToLower() == source.Name.ToLower());
+            return dest.Any(x => x.Name == source.Name);
         }
     }
 }

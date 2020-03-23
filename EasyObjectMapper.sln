@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.572
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyObjectMapper", "EasyObjectMapper\EasyObjectMapper.csproj", "{165106D2-1CC1-4725-A283-33B360C5658A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasyObjectMapper", "EasyObjectMapper\EasyObjectMapper.csproj", "{165106D2-1CC1-4725-A283-33B360C5658A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyObjectMapperTest", "EasyObjectMapperTest\EasyObjectMapperTest.csproj", "{D64EFC65-E4C4-497C-B935-741C1C5B77A2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{165106D2-1CC1-4725-A283-33B360C5658A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{165106D2-1CC1-4725-A283-33B360C5658A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{165106D2-1CC1-4725-A283-33B360C5658A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D64EFC65-E4C4-497C-B935-741C1C5B77A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D64EFC65-E4C4-497C-B935-741C1C5B77A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D64EFC65-E4C4-497C-B935-741C1C5B77A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D64EFC65-E4C4-497C-B935-741C1C5B77A2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
